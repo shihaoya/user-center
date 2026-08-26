@@ -1,0 +1,18 @@
+## 应用服务 WEB 访问端口
+server:
+  port: 8080
+
+##下面这些内容是为了让MyBatis映射
+mybatis:
+  ##指定Mybatis的Mapper文件
+  config-location: classpath:mappers/*xml
+  ##指定Mybatis的实体目录
+  type-aliases-package: com.hao.usercenter.mybatis.entity
+# DataSource Config
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/user-center
+    username: root
+    password: root
