@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +32,16 @@ public class UserController {
     @PostMapping("/login")
     public LoginVO login(@RequestBody LoginReqeust loginReqeust, HttpServletRequest request) {
         return userService.login(loginReqeust, request);
+    }
+
+    @GetMapping("/current")
+    public User currentUser(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User currentUser = (User) session.getAttribute(UserConstant.USER_LOGIN_STATE);
+        if (currentUser == null) {
+            return null;
+        }
+        return userService.getSafetyUser(userService.getById(currentUser.getId()));
     }
 
     @GetMapping("/list")

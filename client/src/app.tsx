@@ -25,7 +25,7 @@ import { errorConfig } from './requestErrorConfig';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
-
+const WHITE_PATH = [loginPath, '/user/register', '/user/register-result']
 /**
  * @see https://umijs.org/docs/api/runtime-config#getinitialstate
  * */
@@ -38,10 +38,10 @@ export async function getInitialState(): Promise<{
 }> {
   const fetchUserInfo = async () => {
     try {
-      const msg = await queryCurrentUser({
+      const data = await queryCurrentUser({
         skipErrorHandler: true,
       });
-      return msg.data;
+      return data;
     } catch (_error) {
       const { pathname, search, hash } = history.location;
       history.replace(
@@ -52,10 +52,7 @@ export async function getInitialState(): Promise<{
   };
   // 如果不是登录页面，执行
   const { location } = history;
-  if (
-    ![loginPath, '/user/register', '/user/register-result'].includes(
-      location.pathname,
-    )
+  if (!WHITE_PATH.includes(location.pathname)
   ) {
     const currentUser = await fetchUserInfo();
     return {
@@ -101,14 +98,14 @@ export const layout: RunTimeLayoutConfig = ({
     },
     avatarProps: {
       src: initialState?.currentUser?.avatar,
-      title: 'ProUser',
+      title: initialState?.currentUser?.username,
       render: (_, avatarChildren) => (
         <AvatarDropdown>{avatarChildren}</AvatarDropdown>
       ),
     },
-    // waterMarkProps: {
-    //   content: initialState?.currentUser?.name,
-    // },
+    waterMarkProps: {
+      content: initialState?.currentUser?.username ?? '',
+    },
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history;
