@@ -8,6 +8,11 @@ export default [
         path: '/user/login',
         component: './user/login',
       },
+      {
+        name: '注册',
+        path: '/user/register',
+        component: './user/register',
+      },
     ],
   },
   {

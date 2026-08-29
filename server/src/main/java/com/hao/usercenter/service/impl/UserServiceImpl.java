@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import com.hao.usercenter.contant.UserConstant;
 import com.hao.usercenter.model.User;
-import com.hao.usercenter.model.dto.LoginDTO;
-import com.hao.usercenter.model.dto.RegisterDTO;
+import com.hao.usercenter.model.request.LoginReqeust;
+import com.hao.usercenter.model.request.RegisterRequest;
 import com.hao.usercenter.model.vo.LoginVO;
 import com.hao.usercenter.service.UserService;
 import com.hao.usercenter.mapper.UserMapper;
@@ -34,10 +34,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private UserMapper userMapper;
 
     @Override
-    public long register(RegisterDTO registerDTO) {
-        String account = registerDTO.getAccount();
-        String password = registerDTO.getPassword();
-        String confirmPassword = registerDTO.getConfirmPassword();
+    public long register(RegisterRequest registerRequest) {
+        String account = registerRequest.getAccount();
+        String password = registerRequest.getPassword();
+        String confirmPassword = registerRequest.getConfirmPassword();
 
         // 字段不能为空
         if (StringUtils.isAllBlank(account, password, confirmPassword)) {
@@ -80,9 +80,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public LoginVO login(LoginDTO loginDTO, HttpServletRequest request) {
-        String account = loginDTO.getAccount();
-        String password = loginDTO.getPassword();
+    public LoginVO login(LoginReqeust loginReqeust, HttpServletRequest request) {
+        String account = loginReqeust.getAccount();
+        String password = loginReqeust.getPassword();
 
         // 字段不能为空
         if (StringUtils.isAllBlank(account, password)) {

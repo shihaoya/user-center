@@ -1,6 +1,6 @@
 package com.hao.usercenter.service;
 
-import com.hao.usercenter.model.dto.RegisterDTO;
+import com.hao.usercenter.model.request.RegisterRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +18,7 @@ class UserServiceTest {
 
     @Test
     void register_success() {
-        RegisterDTO dto = new RegisterDTO();
+        RegisterRequest dto = new RegisterRequest();
         dto.setAccount("testuser001");
         dto.setPassword("Abc12345");
         dto.setConfirmPassword("Abc12345");
@@ -29,7 +29,7 @@ class UserServiceTest {
 
     @Test
     void register_blankFields_returnsMinusOne() {
-        RegisterDTO dto = new RegisterDTO();
+        RegisterRequest dto = new RegisterRequest();
         dto.setAccount("");
         dto.setPassword("");
         dto.setConfirmPassword("");
@@ -40,7 +40,7 @@ class UserServiceTest {
 
     @Test
     void register_accountTooShort_returnsMinusOne() {
-        RegisterDTO dto = new RegisterDTO();
+        RegisterRequest dto = new RegisterRequest();
         dto.setAccount("abc");
         dto.setPassword("Abc12345");
         dto.setConfirmPassword("Abc12345");
@@ -51,7 +51,7 @@ class UserServiceTest {
 
     @Test
     void register_accountTooLong_returnsMinusOne() {
-        RegisterDTO dto = new RegisterDTO();
+        RegisterRequest dto = new RegisterRequest();
         dto.setAccount("abcdefghijklmnopq");
         dto.setPassword("Abc12345");
         dto.setConfirmPassword("Abc12345");
@@ -62,7 +62,7 @@ class UserServiceTest {
 
     @Test
     void register_accountWithSpecialChars_returnsMinusOne() {
-        RegisterDTO dto = new RegisterDTO();
+        RegisterRequest dto = new RegisterRequest();
         dto.setAccount("test@user");
         dto.setPassword("Abc12345");
         dto.setConfirmPassword("Abc12345");
@@ -73,7 +73,7 @@ class UserServiceTest {
 
     @Test
     void register_passwordTooShort_returnsMinusOne() {
-        RegisterDTO dto = new RegisterDTO();
+        RegisterRequest dto = new RegisterRequest();
         dto.setAccount("testuser002");
         dto.setPassword("Abc1234");
         dto.setConfirmPassword("Abc1234");
@@ -84,7 +84,7 @@ class UserServiceTest {
 
     @Test
     void register_passwordMismatch_returnsMinusOne() {
-        RegisterDTO dto = new RegisterDTO();
+        RegisterRequest dto = new RegisterRequest();
         dto.setAccount("testuser003");
         dto.setPassword("Abc12345");
         dto.setConfirmPassword("Abc12346");
@@ -96,14 +96,14 @@ class UserServiceTest {
     @Test
     void register_duplicateAccount_returnsMinusOne() {
         // 先注册一个用户
-        RegisterDTO first = new RegisterDTO();
+        RegisterRequest first = new RegisterRequest();
         first.setAccount("dupuser001");
         first.setPassword("Abc12345");
         first.setConfirmPassword("Abc12345");
         userService.register(first);
 
         // 再次用相同账号注册
-        RegisterDTO second = new RegisterDTO();
+        RegisterRequest second = new RegisterRequest();
         second.setAccount("dupuser001");
         second.setPassword("Abc12345");
         second.setConfirmPassword("Abc12345");

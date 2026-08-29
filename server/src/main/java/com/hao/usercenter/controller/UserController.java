@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.hao.usercenter.contant.UserConstant;
 import com.hao.usercenter.model.User;
-import com.hao.usercenter.model.dto.LoginDTO;
-import com.hao.usercenter.model.dto.RegisterDTO;
+import com.hao.usercenter.model.request.LoginReqeust;
+import com.hao.usercenter.model.request.RegisterRequest;
 import com.hao.usercenter.model.vo.LoginVO;
 import com.hao.usercenter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +24,13 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public Long register(@RequestBody RegisterDTO registerDTO) {
-        return userService.register(registerDTO);
+    public Long register(@RequestBody RegisterRequest registerRequest) {
+        return userService.register(registerRequest);
     }
 
     @PostMapping("/login")
-    public LoginVO login(@RequestBody LoginDTO loginDTO, HttpServletRequest request) {
-        return userService.login(loginDTO, request);
+    public LoginVO login(@RequestBody LoginReqeust loginReqeust, HttpServletRequest request) {
+        return userService.login(loginReqeust, request);
     }
 
     @GetMapping("/list")

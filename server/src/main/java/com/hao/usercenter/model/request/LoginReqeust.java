@@ -1,4 +1,4 @@
-package com.hao.usercenter.model.dto;
+package com.hao.usercenter.model.request;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 登录前端传参
  */
 @Data
-public class LoginDTO implements Serializable {
+public class LoginReqeust implements Serializable {
 
     private static final long serialVersionUID = -5613039428747569636L;
 
