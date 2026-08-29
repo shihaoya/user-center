@@ -12,5 +12,13 @@ CREATE TABLE `user` (
                         `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                         `del_flag` tinyint(4) DEFAULT NULL COMMENT '逻辑删除',
                         PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='用户表'
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='用户表';
+
+# 增加用户角色
+alter table user
+    add role int default 2 null comment '角色(1-管理员；2-普通用户)';
+
+# del_flag 默认0
+alter table user
+    alter column del_flag set default 0;
 

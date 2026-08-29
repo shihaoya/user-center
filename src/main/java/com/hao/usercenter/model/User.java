@@ -63,6 +63,11 @@ public class User {
     private Integer status;
 
     /**
+     * 角色 1-管理；2-用户
+     */
+    private Integer role;
+
+    /**
      * 创建时间
      */
     private Date createTime;

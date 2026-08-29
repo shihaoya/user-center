@@ -1,8 +1,8 @@
 package com.hao.usercenter.service.impl;
-import java.util.Date;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
+import com.hao.usercenter.contant.UserConstant;
 import com.hao.usercenter.model.User;
 import com.hao.usercenter.model.dto.LoginDTO;
 import com.hao.usercenter.model.dto.RegisterDTO;
@@ -29,10 +29,6 @@ import java.util.regex.Pattern;
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService{
-
-    private static final String SALT = "HAO";
-    // 用户登录状态
-    private static final String USER_LOGIN_STATE = "userLoginState";
 
     @Resource
     private UserMapper userMapper;
@@ -66,15 +62,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return -1;
         }
         // 账号不能重复
-        QueryWrapper<User> eq = new QueryWrapper<>();
-        eq.eq("account", account);
-        long count = userMapper.selectCount(eq);
+        QueryWrapper<User> qw = new QueryWrapper<>();
+        qw.eq("account", account);
+        long count = userMapper.selectCount(qw);
         if (count > 0) {
             return -1;
         }
 
         // 加密
-        String encryptPasswd = DigestUtils.md5DigestAsHex((SALT + password).getBytes());
+        String encryptPasswd = DigestUtils.md5DigestAsHex((UserConstant.SALT + password).getBytes());
 
         // 插入数据
         User user = new User();
@@ -108,7 +104,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         // 查询用户
         // 加密
-        String encryptPasswd = DigestUtils.md5DigestAsHex((SALT + password).getBytes());
+        String encryptPasswd = DigestUtils.md5DigestAsHex((UserConstant.SALT + password).getBytes());
         QueryWrapper<User> qw = new QueryWrapper<>();
         qw.eq("account", account);
         qw.eq("password", encryptPasswd);
@@ -118,6 +114,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return null;
         }
         // 脱敏
+        User safetyUser = getSafetyUser(user);
+
+        // 打包最终返回
+        LoginVO result = new LoginVO();
+        result.setUserInfo(user);
+        HttpSession session = request.getSession();
+        session.setAttribute(UserConstant.USER_LOGIN_STATE, user);
+        return result;
+    }
+
+    /**
+     * 数据脱敏
+     * @param user
+     * @return
+     */
+    @Override
+    public User getSafetyUser(User user) {
         User safetyUser = new User();
         safetyUser.setId(user.getId());
         safetyUser.setUsername(user.getUsername());
@@ -126,13 +139,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         safetyUser.setGender(user.getGender());
         safetyUser.setPhone(user.getPhone());
         safetyUser.setEmail(user.getEmail());
-
-        // 打包最终返回
-        LoginVO result = new LoginVO();
-        result.setUserInfo(user);
-        HttpSession session = request.getSession();
-        session.setAttribute(USER_LOGIN_STATE, user);
-        return result;
+        safetyUser.setRole(user.getRole());
+        return  safetyUser;
     }
 }
 
