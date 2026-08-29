@@ -228,7 +228,7 @@ exports[`Login Page should login success 1`] = `
                           </span>
                           <input
                             class="ant-input ant-input-lg"
-                            id="username"
+                            id="account"
                             placeholder="Username: admin or user"
                             type="text"
                             value="admin"
@@ -800,7 +800,7 @@ exports[`Login Page should show login form 1`] = `
                           </span>
                           <input
                             class="ant-input ant-input-lg"
-                            id="username"
+                            id="account"
                             placeholder="Username: admin or user"
                             type="text"
                             value=""

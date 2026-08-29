@@ -21,6 +21,7 @@ import { Footer } from '@/components';
 import { login } from '@/services/ant-design-pro/api';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import Settings from '../../../../config/defaultSettings';
+import { SYSTEM_LOGO } from "@/constants";
 
 /**
  * Validate redirect URL to prevent open redirect attacks.
@@ -173,13 +174,9 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          logo={<img alt="logo" src="/logo.svg" />}
-          title="Ant Design"
-          subTitle={'Ant Design 是西湖区最具影响力的 Web 设计规范'}
-          initialValues={{
-            autoLogin: true,
-          }}
-          actions={['loginWith', <ActionIcons key="icons" />]}
+          logo={<img alt="logo" src={SYSTEM_LOGO} />}
+          title="用户中心"
+          subTitle={'用于学习的用户中心'}
           onFinish={async (values) => {
             await handleSubmit(values as API.LoginParams);
           }}
@@ -193,10 +190,6 @@ const Login: React.FC = () => {
                 key: 'account',
                 label: '账户密码登录',
               },
-              {
-                key: 'mobile',
-                label: '手机号登录',
-              },
             ]}
           />
 
@@ -206,12 +199,12 @@ const Login: React.FC = () => {
           {type === 'account' && (
             <>
               <ProFormText
-                name="username"
+                name="account"
                 fieldProps={{
                   size: 'large',
                   prefix: <UserOutlined />,
                 }}
-                placeholder={'用户名: admin or user'}
+                placeholder="请输入用户名"
                 rules={[
                   {
                     required: true,
@@ -225,7 +218,7 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <LockOutlined />,
                 }}
-                placeholder={'密码: ant.design'}
+                placeholder="请输入密码"
                 rules={[
                   {
                     required: true,
@@ -298,18 +291,18 @@ const Login: React.FC = () => {
               marginBottom: 24,
             }}
           >
-            <ProFormCheckbox noStyle name="autoLogin">
-              自动登录
-            </ProFormCheckbox>
-            <Button
-              type="link"
-              style={{
-                float: 'right',
-                padding: 0,
-              }}
-            >
-              忘记密码 ?
-            </Button>
+            {/*<ProFormCheckbox noStyle name="autoLogin">*/}
+            {/*  自动登录*/}
+            {/*</ProFormCheckbox>*/}
+            {/*<Button*/}
+            {/*  type="link"*/}
+            {/*  style={{*/}
+            {/*    float: 'right',*/}
+            {/*    padding: 0,*/}
+            {/*  }}*/}
+            {/*>*/}
+            {/*  忘记密码 ?*/}
+            {/*</Button>*/}
           </div>
         </LoginForm>
       </div>

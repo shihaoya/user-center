@@ -23,7 +23,19 @@ declare namespace API {
     phone?: string;
   };
 
+  // 返回用户信息
+  type UserInfoVO = {
+    username?: string;
+    account: string;
+    avatar?: string;
+    gender?: string;
+    phone?: string;
+    email?: string;
+  }
+
   type LoginResult = {
+    token?: string;
+    userInfo?: UserInfoVO;
     status?: string;
     type?: string;
     currentAuthority?: string;
@@ -62,7 +74,7 @@ declare namespace API {
   };
 
   type LoginParams = {
-    username?: string;
+    account?: string;
     password?: string;
     autoLogin?: boolean;
     type?: string;
