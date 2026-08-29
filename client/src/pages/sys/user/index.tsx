@@ -1,9 +1,9 @@
-import { EllipsisOutlined, PlusOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { ProTable, TableDropdown } from '@ant-design/pro-components';
-import {Avatar, Button, Dropdown, message, Space, Tag} from 'antd';
-import { useRef } from 'react';
+import type {ActionType, ProColumns} from '@ant-design/pro-components';
+import {ProTable, TableDropdown} from '@ant-design/pro-components';
+import {message} from 'antd';
+import {useRef} from 'react';
 import {users} from "@/services/ant-design-pro/api";
+
 export const waitTimePromise = async (time: number = 100) => {
   return new Promise((resolve) => {
     setTimeout(() => {

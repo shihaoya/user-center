@@ -32,9 +32,18 @@ public interface UserService extends IService<User> {
     LoginVO login(LoginReqeust loginReqeust, HttpServletRequest request);
 
     /**
+     * 登出
+     *
+     * @param request
+     * @return
+     */
+    Boolean logout(HttpServletRequest request);
+
+    /**
      * 用户脱敏
      * @param user
      * @return
      */
     User getSafetyUser(User user);
+
 }

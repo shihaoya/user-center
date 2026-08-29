@@ -34,6 +34,11 @@ public class UserController {
         return userService.login(loginReqeust, request);
     }
 
+    @PostMapping("/logout")
+    public Boolean logout(HttpServletRequest request) {
+        return userService.logout(request);
+    }
+
     @GetMapping("/current")
     public User currentUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -47,7 +52,7 @@ public class UserController {
     @GetMapping("/list")
     public List<User> list(String username, HttpServletRequest request) {
         // 管理员可操作
-        if (isAdmin(request)) {
+        if (!isAdmin(request)) {
             return new ArrayList<>();
         }
         QueryWrapper<User> qw = new QueryWrapper<>();
@@ -63,7 +68,7 @@ public class UserController {
     @PostMapping("/delete")
     public Boolean delete(@RequestBody Long id, HttpServletRequest request) {
         // 管理员可操作
-        if (isAdmin(request)) {
+        if (!isAdmin(request)) {
             return false;
         }
         if (id == null) {

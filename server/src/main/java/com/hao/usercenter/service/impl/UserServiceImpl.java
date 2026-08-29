@@ -76,6 +76,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         User user = new User();
         user.setAccount(account);
         user.setPassword(encryptPasswd);
+        log.info("注册用户：{}", user);
         return userMapper.insert(user);
     }
 
@@ -118,10 +119,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
         // 打包最终返回
         LoginVO result = new LoginVO();
-        result.setUserInfo(user);
+        result.setUserInfo(safetyUser);
         HttpSession session = request.getSession();
-        session.setAttribute(UserConstant.USER_LOGIN_STATE, user);
+        session.setAttribute(UserConstant.USER_LOGIN_STATE, safetyUser);
+        log.info("登入用户：{}", safetyUser);
         return result;
+    }
+
+    @Override
+    public Boolean logout(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute(UserConstant.USER_LOGIN_STATE);
+        request.getSession().removeAttribute(UserConstant.USER_LOGIN_STATE);
+        log.info("登出用户：{}", user);
+        return true;
     }
 
     /**
