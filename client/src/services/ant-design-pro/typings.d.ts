@@ -11,6 +11,9 @@ declare namespace API {
     phone?: string;
     address?: string;
     gender?: number;
+    role?: number;
+    createTime?: string;
+    updateTime?: string;
   };
 
   // 返回用户信息

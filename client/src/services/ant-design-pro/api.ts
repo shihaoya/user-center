@@ -10,6 +10,14 @@ export async function currentUser(options?: { [key: string]: any }) {
   });
 }
 
+/** 用户管理 */
+export async function users(options?: { [key: string]: any }) {
+  return request<API.CurrentUser>('/user/list', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** 退出登录接口 POST /api/login/outLogin */
 export async function outLogin(options?: { [key: string]: any }) {
   return request<Record<string, any>>('/api/login/outLogin', {

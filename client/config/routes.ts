@@ -39,6 +39,23 @@ export default [
     ],
   },
   {
+    path: '/sys',
+    name: '系统管理',
+    icon: 'setting',
+    access: 'canAdmin',
+    routes: [
+      {
+        path: '/sys',
+        redirect: '/sys/user',
+      },
+      {
+        path: '/sys/user',
+        name: '用户管理',
+        component: './sys/user',
+      },
+    ],
+  },
+  {
     name: '查询表格',
     icon: 'table',
     path: '/list',
