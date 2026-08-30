@@ -38,9 +38,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         String account = registerRequest.getAccount();
         String password = registerRequest.getPassword();
         String confirmPassword = registerRequest.getConfirmPassword();
-
+        String planetCode = registerRequest.getPlanetCode();
         // 字段不能为空
-        if (StringUtils.isAllBlank(account, password, confirmPassword)) {
+        if (StringUtils.isAllBlank(account, password, confirmPassword, planetCode)) {
             return -1;
         }
         // 账号4-16位
@@ -68,6 +68,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (count > 0) {
             return -1;
         }
+        // 星球编号不能重复
+        qw = new QueryWrapper<>();
+        qw.eq("planet_code", planetCode);
+        count = userMapper.selectCount(qw);
+        if (count > 0) {
+            return -1;
+        }
 
         // 加密
         String encryptPasswd = DigestUtils.md5DigestAsHex((UserConstant.SALT + password).getBytes());
@@ -76,6 +83,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         User user = new User();
         user.setAccount(account);
         user.setPassword(encryptPasswd);
+        user.setPlanetCode(planetCode);
         log.info("注册用户：{}", user);
         return userMapper.insert(user);
     }
@@ -153,6 +161,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         safetyUser.setPhone(user.getPhone());
         safetyUser.setEmail(user.getEmail());
         safetyUser.setRole(user.getRole());
+        safetyUser.setPlanetCode(user.getPlanetCode());
         return  safetyUser;
     }
 }

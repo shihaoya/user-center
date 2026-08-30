@@ -4,18 +4,6 @@ import {message} from 'antd';
 import {useRef} from 'react';
 import {users} from "@/services/ant-design-pro/api";
 
-export const waitTimePromise = async (time: number = 100) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, time);
-  });
-};
-
-export const waitTime = async (time: number = 100) => {
-  await waitTimePromise(time);
-};
-
 const columns: ProColumns<API.CurrentUser>[] = [
   {
     dataIndex: 'index',
@@ -31,6 +19,12 @@ const columns: ProColumns<API.CurrentUser>[] = [
   {
     title: '账号',
     dataIndex: 'account',
+    copyable: true,
+    ellipsis: true,
+  },
+  {
+    title: '星球编号',
+    dataIndex: 'planetCode',
     copyable: true,
     ellipsis: true,
   },

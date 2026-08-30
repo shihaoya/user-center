@@ -22,3 +22,7 @@ alter table user
 alter table user
     alter column del_flag set default 0;
 
+# 增加星球编号
+alter table user
+    add planet_code varchar(255) null comment '知识星球编号' after role;
+

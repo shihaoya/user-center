@@ -68,6 +68,11 @@ public class User {
     private Integer role;
 
     /**
+     * 知识星球编号
+     */
+    private String planetCode;
+
+    /**
      * 创建时间
      */
     private Date createTime;

@@ -26,4 +26,9 @@ public class RegisterRequest implements Serializable {
      * 确认密码
      */
     private String confirmPassword;
+
+    /**
+     * 知识星球编号
+     */
+    private String planetCode;
 }

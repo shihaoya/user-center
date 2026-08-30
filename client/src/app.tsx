@@ -98,13 +98,13 @@ export const layout: RunTimeLayoutConfig = ({
     },
     avatarProps: {
       src: initialState?.currentUser?.avatar,
-      title: initialState?.currentUser?.username,
+      title: `${initialState?.currentUser?.username}(${initialState?.currentUser?.account})`,
       render: (_, avatarChildren) => (
         <AvatarDropdown>{avatarChildren}</AvatarDropdown>
       ),
     },
     waterMarkProps: {
-      content: initialState?.currentUser?.username ?? '',
+      content: `${initialState?.currentUser?.username}(${initialState?.currentUser?.account})`,
     },
     footerRender: () => <Footer />,
     onPageChange: () => {

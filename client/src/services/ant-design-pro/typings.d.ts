@@ -12,6 +12,7 @@ declare namespace API {
     address?: string;
     gender?: number;
     role?: number;
+    planetCode?: string;
     createTime?: string;
     updateTime?: string;
   };
@@ -79,6 +80,7 @@ declare namespace API {
     account?: string;
     password?: string;
     confirmPassword?: boolean;
+    planetCode?: string;
     type?: string;
   };
 

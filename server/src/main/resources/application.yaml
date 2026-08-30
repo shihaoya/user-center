@@ -4,14 +4,6 @@ server:
   servlet:
     context-path: /api
 
-##下面这些内容是为了让MyBatis映射
-mybatis:
-  ##指定Mybatis的Mapper文件
-  config-location: classpath:mappers/*xml
-  ##指定Mybatis的实体目录
-  type-aliases-package: com.hao.usercenter.mybatis.entity
-# DataSource Config
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -21,8 +13,11 @@ spring:
 
 
 mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml   # 注意：MP中指定xml路径通常用 mapper-locations
+  type-aliases-package: com.hao.usercenter.mybatis.entity
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true # 下划线转驼峰
   global-config:
     db-config:
       # 逻辑删除
