@@ -20,7 +20,7 @@ public interface UserService extends IService<User> {
      * @param registerRequest 注册参数
      * @return 用户id
      */
-    long register(RegisterRequest registerRequest);
+    Long register(RegisterRequest registerRequest);
 
     /**
      * 登录

@@ -2,7 +2,11 @@ package com.hao.usercenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.hao.usercenter.common.BaseResponse;
+import com.hao.usercenter.common.ErrorCode;
+import com.hao.usercenter.common.ResultUtils;
 import com.hao.usercenter.contant.UserConstant;
+import com.hao.usercenter.execption.BusinessException;
 import com.hao.usercenter.model.User;
 import com.hao.usercenter.model.request.LoginReqeust;
 import com.hao.usercenter.model.request.RegisterRequest;
@@ -25,56 +29,56 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public Long register(@RequestBody RegisterRequest registerRequest) {
-        return userService.register(registerRequest);
+    public BaseResponse<Long> register(@RequestBody RegisterRequest registerRequest) {
+        return ResultUtils.success(userService.register(registerRequest));
     }
 
     @PostMapping("/login")
-    public LoginVO login(@RequestBody LoginReqeust loginReqeust, HttpServletRequest request) {
-        return userService.login(loginReqeust, request);
+    public BaseResponse<LoginVO> login(@RequestBody LoginReqeust loginReqeust, HttpServletRequest request) {
+        return ResultUtils.success(userService.login(loginReqeust, request));
     }
 
     @PostMapping("/logout")
-    public Boolean logout(HttpServletRequest request) {
-        return userService.logout(request);
+    public BaseResponse<Boolean> logout(HttpServletRequest request) {
+        return ResultUtils.success(userService.logout(request));
     }
 
     @GetMapping("/current")
-    public User currentUser(HttpServletRequest request) {
+    public BaseResponse<User> currentUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute(UserConstant.USER_LOGIN_STATE);
         if (currentUser == null) {
-            return null;
+            throw new BusinessException(ErrorCode.NO_AUTH);
         }
-        return userService.getSafetyUser(userService.getById(currentUser.getId()));
+        return ResultUtils.success(userService.getSafetyUser(userService.getById(currentUser.getId())));
     }
 
     @GetMapping("/list")
-    public List<User> list(String username, HttpServletRequest request) {
+    public BaseResponse<List<User>> list(String username, HttpServletRequest request) {
         // 管理员可操作
         if (!isAdmin(request)) {
-            return new ArrayList<>();
+            throw new BusinessException(ErrorCode.NO_AUTH);
         }
         QueryWrapper<User> qw = new QueryWrapper<>();
         if (StringUtils.isNotBlank(username)) {
             qw.like("username", username);
         }
         List<User> list = userService.list(qw);
-        return list.stream()
+        return ResultUtils.success(list.stream()
                 .map(u -> userService.getSafetyUser(u))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     @PostMapping("/delete")
-    public Boolean delete(@RequestBody Long id, HttpServletRequest request) {
+    public BaseResponse<Boolean> delete(@RequestBody Long id, HttpServletRequest request) {
         // 管理员可操作
         if (!isAdmin(request)) {
-            return false;
+            throw new BusinessException(ErrorCode.NO_AUTH);
         }
         if (id == null) {
-            return false;
+            return ResultUtils.success(false);
         }
-        return userService.removeById(id);
+        return ResultUtils.success(userService.removeById(id));
     }
 
 
