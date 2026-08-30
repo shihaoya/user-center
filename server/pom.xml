@@ -93,7 +93,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.hao.usercenter.ServerApplication</mainClass>
-                    <skip>true</skip>
+                    <skip>false</skip>
                 </configuration>
                 <executions>
                     <execution>
