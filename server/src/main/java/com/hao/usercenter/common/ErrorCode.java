@@ -13,6 +13,7 @@ public enum ErrorCode {
     NULL_ERROR(40001, "数据为空", ""),
     NOT_LOGIN(40101, "未登录", ""),
     NO_AUTH(40100, "暂无权限", ""),
+    NO_LOGIN(40100, "请先登录", ""),
     NOT_FOUND(40400, "请求的数据不存在", ""),
     SYSTEM_EXCEPTION(50000, "系统异常", ""),
     OPERATION_ERROR(50001, "操作失败", "");

@@ -48,7 +48,7 @@ public class UserController {
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute(UserConstant.USER_LOGIN_STATE);
         if (currentUser == null) {
-            throw new BusinessException(ErrorCode.NO_AUTH);
+            throw new BusinessException(ErrorCode.NO_LOGIN);
         }
         return ResultUtils.success(userService.getSafetyUser(userService.getById(currentUser.getId())));
     }
