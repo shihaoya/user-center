@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.hao.usercenter.common.BaseResponse;
 import com.hao.usercenter.common.ErrorCode;
 import com.hao.usercenter.common.ResultUtils;
-import com.hao.usercenter.contant.UserConstant;
-import com.hao.usercenter.execption.BusinessException;
+import com.hao.usercenter.constant.UserConstant;
+import com.hao.usercenter.exception.BusinessException;
 import com.hao.usercenter.model.User;
 import com.hao.usercenter.model.request.LoginReqeust;
 import com.hao.usercenter.model.request.RegisterRequest;
@@ -76,7 +76,7 @@ public class UserController {
             throw new BusinessException(ErrorCode.NO_AUTH);
         }
         if (id == null) {
-            return ResultUtils.success(false);
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "id不能为空");
         }
         return ResultUtils.success(userService.removeById(id));
     }

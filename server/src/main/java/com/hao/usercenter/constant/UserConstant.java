@@ -1,4 +1,4 @@
-package com.hao.usercenter.contant;
+package com.hao.usercenter.constant;
 
 /**
  * 用户常量
